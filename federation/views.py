@@ -4,15 +4,18 @@
 from federation import app
 from flask import render_template, request, redirect
 from . import db
-from models import Event, EventForm, Newsletter, make_choices
+from models import Event, EventForm, Newsletter, make_choices, UserForm
 
-from flask.ext.security import login_required
+from flask.ext.security import login_required, current_user, roles_required, roles_accepted
+from flask.ext.security.utils import encrypt_password
+from auth import user_datastore
 
 import arrow
 import dateutil.parser
 from datetime import datetime, timedelta
 from bson.objectid import ObjectId
 
+from auth import User
 
 bariol_icons = ['penguin', 'sir', 'bottle', 'batman', 'dark-vador', 'homer', 'dracula', 'pirate']
 
@@ -55,6 +58,10 @@ def events(id=None):
         event.description = add_form.description.data
         event.organisations = add_form.organisations.data
         event.places = add_form.places.data
+
+        if not event.author:
+            event.author = current_user.to_dbref()
+
         event.datetime_first = arrow.get(add_form.datetime_first.data).datetime
         event.datetime_last = arrow.get(add_form.datetime_last.data).datetime
         event.update_timezone()
@@ -66,15 +73,22 @@ def events(id=None):
             return redirect('/events')
 
     today = arrow.now().date()
-    events_published = Event.objects(status='published', datetime_first__gte=today).order_by('datetime_first')
-    events_old_published = Event.objects(status='published', datetime_first__lt=today).order_by('-datetime_first')
+
+    # Filter the events for non-admin users
+    if not current_user.has_role('Administrateur'):
+        filter_role = {'author': current_user.id}
+    else:
+        filter_role = {}
+
+    events_published = Event.objects(status='published', datetime_first__gte=today, **filter_role).order_by('datetime_first')
+    events_old_published = Event.objects(status='published', datetime_first__lt=today, **filter_role).order_by('-datetime_first')
     events_draft = Event.objects(status='draft').order_by('datetime_first')
 
     return render_template('events.html', events_draft=events_draft, events_old_published=events_old_published, events_published=events_published, add_form=add_form, title_aside=title_aside, icons=icons)
 
 
 @app.route('/newsletter', methods=['GET', 'POST'])
-@login_required
+@roles_accepted('Éditeur', 'Administrateur')
 def newsletter():
     news_form = Newsletter()
     events = []
@@ -95,12 +109,51 @@ def newsletter():
 
 
 @app.route('/cse')
-@login_required
+@roles_accepted('CSE-Dossier', 'CSE-Demande')
 def cse():
     return render_template('logged.html')
 
 
-@app.route('/admin')
+@app.route('/admin/edit/<string:id>', methods=['GET', 'POST'])
+@app.route('/admin', methods=['GET', 'POST'])
+@roles_required('Administrateur')
 @login_required
-def admin():
-    return render_template('logged.html')
+def admin(id=None):
+    if id:
+        user = User.objects.get(id=id)
+        raw_user = user.to_mongo()
+        raw_user.pop('roles')
+        user_form = UserForm(request.form, roles=[r.name for r in user.roles], **raw_user)
+        title_aside = u'Modifier l\'utilisateur'
+    else:
+        user = User()
+        user_form = UserForm()
+        title_aside = u'Créer un utilisateur'
+
+    if user_form.roles.data:
+        user_form.roles.choices = make_choices(user_form.roles_choices, selected=user_form.roles.data, name='Rôles')
+
+    if user_form.validate_on_submit():
+        user.email = user_form.email.data
+        user.nom = user_form.nom.data
+        user.prenom = user_form.prenom.data
+        if user_form.password.data:
+            user.password = encrypt_password(user_form.password.data)
+
+        roles_list = [user_datastore.find_or_create_role(role_name).to_dbref() for role_name in user_form.roles.data]
+        user.roles = roles_list
+
+        user.save()
+
+        # user = user_datastore.get_user(user.id)
+        # for role_name in user_form.roles.data:
+        #     role = user_datastore.find_or_create_role(role_name)
+        #     user_datastore.add_role_to_user(user, role)
+        if id:
+            return redirect('/admin')
+
+    def pretty_roles(roles):
+        return ', '.join([r.name for r in roles])
+
+    users = User.objects()
+    return render_template('admin.html', users=users, arrow=arrow, user_form=user_form, title_aside=title_aside, pretty_roles=pretty_roles)

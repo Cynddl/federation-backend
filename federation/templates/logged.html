@@ -34,7 +34,7 @@
             {% if current_user.is_authenticated() %}
             <div class="right-block">
                 <ul class="nav nav-line">
-                    <li>Connecté en tant que {{ current_user.email }}</li>
+                    <li>Hey, {{ current_user.prenom }} {{ current_user.nom }} !</li>
                     <li><a href="/logout">Déconnection</a></li>    
                 </ul>
             </div>

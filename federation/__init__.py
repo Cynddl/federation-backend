@@ -21,6 +21,7 @@ app.config['FACEBOOK_AUTH'] = os.getenv('FACEBOOK_AUTH', 'CAACEdEose0cBAOBDTWXIk
 app.config['SECURITY_PASSWORD_HASH'] = 'bcrypt'
 app.config['SECURITY_PASSWORD_SALT'] = 'secret_code'
 app.config['SECURITY_CHANGEABLE'] = True
+app.config['SECURITY_TRACKABLE'] = True
 
 app.secret_key = 'KU\x05x\x81v\x99\xff\x9a\xfd\xea^\xab\x99\x9e\t\x87\xc5\xf8\x93\x8d\x98\x84\x95'
 
@@ -69,8 +70,8 @@ main_css = Bundle('js/pickadate/themes/classic.css',
                   'js/pickadate/themes/classic.date.css',
                   'js/selectize/selectize.css',
                   output='pickadate.min.css')
-assets.register('pickadate_js', main_js)
-assets.register('pickadate_css', main_css)
+assets.register('main_js', main_js)
+assets.register('main_css', main_css)
 
 
 # Import all the views

@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 
 from flask_wtf import Form
-from wtforms import TextField, TextAreaField, SelectMultipleField, HiddenField
+from wtforms import TextField, TextAreaField, SelectMultipleField, HiddenField, PasswordField
 from wtforms.validators import Regexp, Required
 from wtforms.widgets import html_params, HTMLString
 
 from cgi import escape
 
 from werkzeug.security import generate_password_hash, check_password_hash
+from auth import User
 
 from . import db
 import arrow
@@ -85,6 +86,15 @@ class EventForm(Form):
     places = SelectFieldWithDisable('lieux', validators=[Required()], choices=make_choices(places_choices, name='Lieux'))
 
 
+class UserForm(Form):
+    email = TextField('Email', [Required()])
+    password = PasswordField('Mot de passe')
+    nom = TextField('Nom', [Required()])
+    prenom = TextField('Prénom', [Required()])
+    roles_choices = [u'Administrateur', u'Éditeur', u'CSE-Anonyme', u'CSE-Dossier']
+    roles = SelectFieldWithDisable('roles', validators=[], choices=make_choices(roles_choices, name='Roles'))
+
+
 class Newsletter(Form):
     title = TextField()
     message = TextAreaField(default=u'Bonjour à tous,\n\nAu programme de cette newsletter…\n\nLa Com\'')
@@ -108,6 +118,8 @@ class Event(db.Document):
 
     organisations = db.ListField()
     places = db.ListField()
+
+    author = db.ReferenceField('User')
 
     meta = {'collection': 'events'}
 
