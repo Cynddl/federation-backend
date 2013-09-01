@@ -1,0 +1,400 @@
+@import "bourbon/bourbon";
+@import "neat/neat";
+@import "neat/neat-helpers";
+
+@import "vars_typeplate";
+@import "typeplate";
+
+@import "modules/colors";
+@import "modules/typography";
+@import "modules/grid";
+@import "modules/buttons";
+
+
+// Main styles
+// --------------------------------------------------
+
+body, html {
+	margin: auto;
+	height: 100%;
+}
+
+a {
+	text-decoration: none;
+	color: $medium-grey;
+}
+
+a:hover {
+	color: rgb(150, 150, 150);
+	@include transition ( all 0.2s ease-in-out );
+}
+
+::selection
+{
+	background-color: $regular-red;
+	color: white;
+}
+::-moz-selection
+{
+	background-color: $regular-red;
+	color: white;
+}
+
+
+.top-bar {
+	background: $regular-red;
+	color: white;
+	height: 100px;
+
+	h1 {
+		font-size: 30px;
+		margin-left: 2em;
+		color: white;
+		display: inline;
+		line-height: 100px;
+	}
+
+	ul {
+		display: inline;
+		li {
+			display: inline-block;
+			a {
+				color: $beige;
+				padding: 1em;
+			}
+			a:hover {
+				color: white;
+			}
+		}
+	}
+}
+
+body {
+	background-color: $light-grey;
+}
+
+
+.sidebar {
+	position: absolute;
+	top: 100px;
+	left: 0;
+	bottom: 0;
+	width: 300px;
+
+	background-color: white;
+	border-right: 2px solid $grey;	
+	color: $beige;
+
+	h3 {
+		font-weight: lighter;
+		color: $dark-grey;
+	}
+
+	form {
+		padding: 2em 1em 1em 1em;
+
+		input[type="text"], textarea, select {
+			width: 100%;	
+		}
+
+		input[type="text"], textarea, select {
+			margin-bottom: 1em;
+		}
+
+		select {
+			-webkit-appearance:none;
+		}
+
+		.selectize-control {
+			width: 100%;
+		}
+
+		.selectize-input input {
+			margin-bottom: 0;
+		}
+
+		label {
+			color: $grey;
+			float: left;
+			line-height: 30px;
+			padding-right: 5px;
+		}
+
+		label.fixed-width {
+			width: 25px;
+		}
+
+		.left-block {
+			overflow-y: hidden;
+		    display: block;
+
+		    .datepicker {
+		    	width: 165px;
+		    	margin-right: 5px;
+		    }
+
+		    .timepicker {
+		    	width: 71px;
+		    }
+		}
+
+		textarea {
+			height: 120px;
+		}
+	}
+
+	ul {
+		list-style-type: none;
+		padding: 0;
+
+		li a {
+			padding: 0.2em 0.5em 0.2em 3em;
+			color: $beige;
+			display: block;
+		}
+
+		li + li.sep {
+			margin-top: 1em;
+		}
+
+		li.sep a {
+			text-transform: uppercase;
+			background-color: $dark-red;
+			padding: 0.5em 0.5em 0.5em 3em;
+		}
+
+		li.sep, li.sep a {
+			color: $orange-red;
+		}
+
+		li a:hover {
+			color: white;
+		}
+	}
+}
+
+.main-content {
+	position: absolute;
+	padding: 1em;
+	top: 100px;
+	left: 300px;
+	right: 0;
+}
+
+.content {
+
+	table.table {
+		width: 100%;
+		border-spacing: 0;
+		background-color: white;
+		box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+
+		margin-bottom: 2em;
+
+		th {
+			@include border-top-radius( 10px );
+		}
+
+		td, th {
+			padding: 1em;
+			border: 1px solid $grey;
+		}
+
+		.button {
+			margin-left: 5px;
+		}
+
+		th {
+			text-align: left;
+			font-weight: 600;
+		}
+	}
+
+	h2 {
+		display: inline-block;
+		font-weight: lighter;
+		margin-right: 1em;
+		margin-bottom: 0.5em;
+	}
+
+	form {
+		input[type="text"], input[type="password"], textarea, select {
+			padding: 0.5em 1em;
+			font-weight: lighter;			
+		}
+
+		input[type="text"].invalid, input[type="password"].invalid, textarea.invalid, select.invalid, div.invalid {
+			border: 1px solid $regular-red;
+		}
+
+		input[type="text"], input[type="password"], textarea, select, .selectize-input {
+			background-color: white;
+			color: $grey;
+			border: 1px solid $light-grey;
+			box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+		}
+
+
+		.selectize-input input[type="text"] {
+			margin-bottom: 0;
+		}
+
+		input[type="text"], input[type="password"], textarea, select, .selectize-control {
+			margin-bottom: 1em;
+			@include border-left-radius( 3px );
+			@include border-right-radius( 3px );
+		}
+	}
+
+	.form-inline {
+		display: inline-block;
+		margin-bottom: 0.5em;
+	}
+}
+
+.content.box-content {
+	margin: auto;
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;
+
+	height: 60%;
+	min-width: 260px;
+	max-width: 260px;
+	min-height: 300px;
+	padding: 40px;
+
+	background-color: $beige;
+}
+
+
+header.title {
+	height: 91px;
+	border-bottom: 1px solid $grey;
+
+	h2 {
+		font-weight: lighter;
+		font-size: 20px;
+		line-height: 91px;
+		color: $dark-grey;
+		display: inline;
+		margin-right: 1em;
+	}
+
+	margin-bottom: 20px;
+}
+
+.right-block {
+	display: inline;
+	float: right;
+	line-height: 100px;
+	margin-right: 2em;
+}
+
+// Modal windows
+// --------------------------------------------------
+
+.md-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    min-width: 320px;
+    height: auto;
+    z-index: 2000;
+    visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+}
+ 
+.md-show {
+    visibility: visible;
+}
+ 
+.md-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    opacity: 0;
+    background: rgba( $dark-red, 0.95 );
+    transition: all 0.3s;
+}
+ 
+.md-show ~ .md-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+.md-perspective,
+.md-perspective body {
+    height: 100%;
+    overflow: hidden;
+}
+ 
+.md-perspective body  {
+    background: #222;
+    perspective: 600px;
+}
+
+.md-show.md-effect-1 ~ .md-overlay {
+    //background: rgba(0,127,108,0.8);
+}
+ 
+.md-effect-1 .md-content {
+    transform: scale(0) rotate(720deg);
+    opacity: 0;
+    transition: all 0.5s;
+}
+ 
+.md-show.md-effect-1 .md-content {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+}
+
+// --------------------------------------------------
+
+.md-content {
+	color: $beige;
+	background-color: $regular-red;
+
+	header, div {
+		padding: 2em;
+	}
+
+	header {
+		background-color: darken( $regular-red, 5% );
+	}
+
+	h3 {
+		color: white;
+		margin-right: 0.5em;
+		margin-bottom: 0;
+		display: inline-block;
+	}
+}
+
+ul.icons-grid {
+	margin: 1em 0;
+
+	li {
+		display: inline-block;
+
+		a {
+			padding: 0;
+		}
+
+		[class^="icon-"], [class*="icon-"] {
+			height: 75px;
+			width: 75px;
+			line-height: 75px;
+			font-size: 65px;
+			text-align: center;
+			display: inline-block;
+		}
+	}
+}

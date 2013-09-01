@@ -1,0 +1,93 @@
+// Typography
+// --------------------------------------------------
+
+@include font-face(ProximaNova, 'fonts/proxima-nova/proximanova-light-webfont', 300);
+@include font-face(ProximaNova, 'fonts/proxima-nova/proximanova-regular-webfont', 400);
+@include font-face(ProximaNova, 'fonts/proxima-nova/proximanova-semibold-webfont', 600);
+@include font-face(ProximaNova, 'fonts/proxima-nova/proximanova-bold-webfont', 700);
+
+body {
+  font-family: ProximaNova;
+  font-weight: lighter;
+}
+
+
+@include font-face(BariolIcons, 'fonts/bariol-icons/Bariol_Icons');
+
+.bariol-icon {
+	font-family: BariolIcons;
+	font-style: normal;
+	font-size: 20px;
+	color: white;
+	background-color: $medium-blue;
+}
+
+[class^="icon-bariol-"]:before, [class*="icon-bariol-"]:before {
+  font-family: BariolIcons;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+}
+
+$bariol-icons:
+	star		"\00C7",
+	camera		"\00C9",
+	games		"\00D6",
+	mermaid		"\00E1",
+	laptop		"\00EA",
+	scifi		"\00F5",
+	bottle		"\03a9",
+
+	turntable	"\2202",
+	sax			"\220F",
+	trumpet		"\03C0",
+	micro		"\222B",
+	guitar		"\00AA",
+	headphones	"\00BA",
+
+	cup			"\00F8",
+	tea-cup		"\00BF",
+	hamburger	"\00A1",
+	chicken		"\00AC",
+	beer		"\2248",
+	hotdog		"\00BB",
+	cupcake		"\0152",
+	croissant	"\201C",
+
+	penguin		"\002a",
+	sir			"\0033",
+	batman		"\0042",
+	dark-vador	"\0044",
+	homer		"\0053",
+	dracula		"\005A",
+	pirate		"\0060",
+	tintin		"\0067",
+	lego		"\0074",
+	halloween	"\007A",
+	gift		"\00D8",
+	heart		"\201D";
+
+@each $icon in $bariol-icons {
+  $key: nth($icon, 1);
+  $value: nth($icon, 2);
+
+  .icon-bariol-#{$key}:before {
+      content: $value;
+  }
+}
+
+.icons-container {
+	position: relative;
+}
+
+.circle-icon {
+	position: absolute;
+	top:  -25px;
+	left: -25px;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	border-radius: 50%;
+}

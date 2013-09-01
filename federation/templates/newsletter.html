@@ -1,0 +1,54 @@
+{% extends "logged.html" %}
+
+{% block head_assets %}
+	{{super()}}
+	{% assets "pickadate_js" %}
+		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+    {% assets "pickadate_css" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
+{% endblock %}
+
+{# Hack to preserve space and tab render #}
+{% macro render_field(field) %}{% if field.errors %}{% if 'class' in kwargs %}{{ field(class='invalid ' + kwargs.pop('class'), **kwargs)|safe }}{% else %}{{ field(class='invalid', **kwargs)|safe }}{% endif %}{% else %}{{ field(**kwargs)|safe }}{% endif %}{% endmacro %}
+
+
+{% block content %}
+<aside class="sidebar">
+	<form method="POST">
+		{{ news_form.hidden_tag() }}
+		<h3>Créer la newsletter</h3>
+		{{ render_field(news_form.title, placeholder='Titre (facultatif)') }}
+
+		<label for="date_first" class="fixed-width">Du </label>
+		<span class="left-block">{{ render_field(news_form.date_first, class='datepicker') }}</span>
+		<label for="date_last" class="fixed-width">Au </label>
+		<span class="left-block">{{ render_field(news_form.date_last, class='datepicker') }}</span>
+
+		{{ render_field(news_form.message, placeholder='Message') }}
+
+		<input type="submit" name="update" value="Mettre à jour">
+		<p>Pour envoyer la newsletter sur la mailing-list, il suffit de copier le message via le lien ci-dessous.</p>
+    	<input type="submit" name="send" value="J'en veux !">
+	</form>
+</aside>
+<div class="main-content">
+	<h2>Événements dans la prochaine newsletter</h2>
+	<table class="table">
+		<thead>
+			<tr><th>Titre</th><th>Organisations</th><th>Date de début</th><th>Date de fin</th></tr>
+		</thead>
+		<tbody>
+			{% for event in events %}
+			<tr>
+				<td>{{ event.title }}</td>
+				<td>{{ ', '.join(event.organisations) }}</td>
+				<td>{{ momentjs(event.datetime_first).calendar() }}</td>
+				<td>{{ momentjs(event.datetime_last).calendar() }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>	
+</div>
+{% endblock %}

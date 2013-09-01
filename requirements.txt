@@ -1,0 +1,13 @@
+Flask==0.9
+Flask-Assets==0.8
+Flask-Security==1.6.9
+Flask-WTF==0.8.4
+WTForms==1.0.4
+arrow==0.3.4
+facebook-sdk==0.4.0
+flask-mongoengine==0.7.0
+itsdangerous==0.22
+jsmin==2.0.3
+passlib==1.6.1
+pyScss==1.1.5
+simplejson==3.3.0

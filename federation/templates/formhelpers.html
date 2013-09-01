@@ -1,0 +1,2 @@
+{# Hack to preserve space and tab render #}
+{% macro render_field(field) %}{% if field.errors %}{% if 'class' in kwargs %}{{ field(class='invalid ' + kwargs.pop('class'), **kwargs)|safe }}{% else %}{{ field(class='invalid', **kwargs)|safe }}{% endif %}{% else %}{{ field(**kwargs)|safe }}{% endif %}{% endmacro %}
