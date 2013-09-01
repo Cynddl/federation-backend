@@ -116,7 +116,7 @@ def cse():
 
 @app.route('/admin/edit/<string:id>', methods=['GET', 'POST'])
 @app.route('/admin', methods=['GET', 'POST'])
-@roles_required('Administrateur')
+
 @login_required
 def admin(id=None):
     if id:
