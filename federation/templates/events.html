@@ -2,15 +2,41 @@
 
 {% block head_assets %}
 	{{super()}}
-	{% assets "pickadate_js" %}
+	{% assets "main_js" %}
 		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
 	{% endassets %}
-	{% assets "pickadate_css" %}
+	{% assets "main_css" %}
 		<link rel="stylesheet" href="{{ ASSET_URL }}">
 	{% endassets %}
 {% endblock %}
 
 {% from "formhelpers.html" import render_field %}
+
+{% macro events_table(events, admin=False) -%}
+<table class="table">
+		<thead>
+		{% if current_user.has_role('Administrateur') or current_user.has_role('Éditeur') %}
+			<tr><th>Titre</th><th>Auteur</th><th>Organisations</th><th>Date de début</th><th>Date de fin</th></tr>
+		{% else %}
+			<tr><th>Titre</th><th>Organisations</th><th>Date de début</th><th>Date de fin</th></tr>
+		{% endif %}
+		</thead>
+		<tbody>
+			{% for event in events %}
+			<tr>
+				<td>{{ event.title }}<a href="/events/edit/{{event.pk}}" class="button button-small">Éditer</a></td>
+				{% if current_user.has_role('Administrateur') or current_user.has_role('Éditeur') %}
+				<td>{{event.author.prenom}} {{event.author.nom}}</td>
+				{% endif %}
+				<td>{{ ', '.join(event.organisations) }}</td>
+				<td>{{ momentjs(event.datetime_first).calendar() }}</td>
+				<td>{{ momentjs(event.datetime_last).calendar() }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{%- endmacro %}
+
 
 {% block content %}
 <aside class="sidebar">
@@ -58,56 +84,23 @@
 <div class="main-content">
 	{% if events_draft.count() != 0 %}
 	<h2>Vos brouillons</h2>
-	<table class="table">
-		<thead>
-			<tr><th>Titre</th><th>Organisations</th><th>Date de début</th><th>Date de fin</th></tr>
-		</thead>
-		<tbody>
-			{% for event in events_draft %}
-			<tr>
-				<td>{{ event.title }}<a href="/events/edit/{{event.pk}}" class="button button-small">Éditer</a></td>
-				<td>{{ ', '.join(event.organisations) }}</td>
-				<td>{{ momentjs(event.datetime_first).calendar() }}</td>
-				<td>{{ momentjs(event.datetime_last).calendar() }}</td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+	{{events_table(events_draft)}}
 	{% endif %}
 
-	<h2>Vos prochains événements</h2>
-	<table class="table">
-		<thead>
-			<tr><th>Titre</th><th>Organisations</th><th>Date de début</th><th>Date de fin</th></tr>
-		</thead>
-		<tbody>
-			{% for event in events_published %}
-			<tr>
-				<td>{{ event.title }}<a href="/events/edit/{{event.pk}}" class="button button-small">Éditer</a></td>
-				<td>{{ ', '.join(event.organisations) }}</td>
-				<td>{{ momentjs(event.datetime_first).calendar() }}</td>
-				<td>{{ momentjs(event.datetime_last).calendar() }}</td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-
-	<h2>Vos anciens événements</h2>
-	<table class="table">
-		<thead>
-			<tr><th>Titre</th><th>Organisations</th><th>Date de début</th><th>Date de fin</th></tr>
-		</thead>
-		<tbody>
-			{% for event in events_old_published %}
-			<tr>
-				<td>{{ event.title }}<a href="/events/edit/{{event.pk}}" class="button button-small">Éditer</a></td>
-				<td>{{ ', '.join(event.organisations) }}</td>
-				<td>{{ momentjs(event.datetime_first).calendar() }}</td>
-				<td>{{ momentjs(event.datetime_last).calendar() }}</td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-		
+	{% if current_user.has_role('Administrateur') or current_user.has_role('Éditeur') %}
+		<h2>Brouillons <small>(attention aux conflits d'édition)</small></h2>
+		{{events_table(events_draft)}}
+		<h2>Prochains événements</h2>
+		{{events_table(events_published, admin=True)}}
+		<h2>Anciens événements</h2>
+		{{events_table(events_old_published, admin=True)}}
+	{% else %}
+		<h2>Vos brouillons</h2>
+		{{events_table(events_draft)}}
+		<h2>Vos prochains événements</h2>
+		{{events_table(events_published)}}	
+		<h2>Vos anciens événements</h2>
+		{{events_table(events_old_published)}}
+	{% endif %}
 </div>
 {% endblock %}

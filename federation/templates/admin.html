@@ -1,0 +1,53 @@
+{% extends "logged.html" %}
+
+{% block head_assets %}
+	{{super()}}
+	{% assets "main_js" %}
+		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+	{% endassets %}
+	{% assets "main_css" %}
+		<link rel="stylesheet" href="{{ ASSET_URL }}">
+	{% endassets %}
+{% endblock %}
+
+{% from "formhelpers.html" import render_field %}
+{% block content %}
+<aside class="sidebar">
+	<form method="POST">
+		{{ user_form.hidden_tag() }}
+		<h3>{{title_aside}}</h3>
+		{{ render_field(user_form.email, placeholder='Email') }}
+		{{ render_field(user_form.prenom, placeholder='Prénom') }}
+		{{ render_field(user_form.nom, placeholder='Nom') }}
+		{{ render_field(user_form.password, placeholder='Mot de passe') }}
+
+		{{ render_field(user_form.roles, class="selectize", multiple=True) }}
+
+		<input type="submit" name="publish" value="Enregistrer">
+		{#<input class="button-grey" type="submit" name="del" value="Supprimer">#}
+	</form>
+</aside>
+<div class="main-content">
+	<h2>Utilisateurs</h2>
+	<table class="table">
+		<thead>
+			<tr><th>Email</th><th>Roles</th><th>Dernière connection</th><th>Nombre de connections</th></tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+			<tr>
+				<td>{{ user.email }}<a href="/admin/edit/{{user.pk}}" class="button button-small">Éditer</a></td>
+				<td>{{ pretty_roles(user.roles) }}</td>
+				{% if user.login_count %}
+				<td>{{ arrow.get(user.last_login_at).to('Europe/Paris').format('DD MMMM à HH:mm', 'fr') }}</td>
+				<td>{{ user.login_count }}</td>
+				{% else %}
+				<td>Jamais</td>
+				<td>Aucune</td>
+				{% endif %}
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}
