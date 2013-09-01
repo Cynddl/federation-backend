@@ -14,7 +14,7 @@ from jinja2 import evalcontextfilter, Markup, escape
 
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = os.getenv('MONGOHQ_URI', 'mongodb://dev:dev@localhost/federation')
+app.config['MONGO_URI'] = os.getenv('MONGOHQ_URI', 'mongodb://federation:citrouille@dharma.mongohq.com:10002/fede-ensl')
 app.config['MONGODB_SETTINGS'] = {'db': 'federation', 'host': app.config['MONGO_URI']}
 app.config['FACEBOOK_AUTH'] = os.getenv('FACEBOOK_AUTH', 'CAACEdEose0cBAOBDTWXIkShrnPuMBi1DaR0rTCZBYUPDrfv7ApZBYThapTlWWbrYkhtui9gzqZB3ZBD5resgYTl9Mh3D43BkzQg0tF5R75fUkAMx7M1P6ZB6KEL1IKcGZCMt9deZAUTdtckkRUm6GEefzOF2ZCMnzaK88goQCZBZB1mQZDZD')
 
@@ -29,7 +29,7 @@ app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
 # Connection to MongoDB
-db = MongoEngine(app)
+# db = MongoEngine(app)
 
 
 # Add a "nl2br" filter
