@@ -1,0 +1,113 @@
+{% extends "logged.html" %}
+
+{% block head_assets %}
+	{{super()}}
+	{% assets "pickadate_js" %}
+		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+	{% endassets %}
+	{% assets "pickadate_css" %}
+		<link rel="stylesheet" href="{{ ASSET_URL }}">
+	{% endassets %}
+{% endblock %}
+
+{% from "formhelpers.html" import render_field %}
+
+{% block content %}
+<aside class="sidebar">
+	<form method="POST">
+		{{ add_form.hidden_tag() }}
+		<h3>{{title_aside}}</h3>
+		{{ render_field(add_form.title, placeholder='Titre') }}
+		<label for="date_first" class="fixed-width">Du </label>
+		<span class="left-block">{{ render_field(add_form.date_first, class='datepicker') }}{{ render_field(add_form.time_first, class='timepicker') }}</span>
+		<label for="date_last" class="fixed-width">Au </label>
+		<span class="left-block">{{ render_field(add_form.date_last, class='datepicker') }}{{ render_field(add_form.time_last, class='timepicker') }}</span>
+
+		{{ render_field(add_form.description, placeholder='Description') }}
+
+		{{ render_field(add_form.organisations, class="selectize", multiple=True) }}
+		{{ render_field(add_form.places, class="selectize", multiple=True) }}
+		
+
+		<div class="md-modal md-effect-1" id="modal-1">
+		    <div class="md-content">
+		    	<header>
+		        	<h3>Icône de l'événement</h3> <button class="md-close button button-grey">Fermer</button>
+		        </header>
+		        <div>
+		        {% for group in icons %}
+		        	<h4>{{group}}</h4>
+		            <ul class="icons-grid">
+		            	{% for icon in icons[group] %}
+		            	<li><a href="#"><i class="icon-{{icon}}"></i></a></li>	
+		            	{% endfor %}
+		            </ul>
+		        {% endfor %}
+		        </div>
+		    </div>
+		</div>
+		 
+		<p><button class="md-trigger button" data-modal="modal-1">Icône</button></p>
+		<div class="md-overlay"></div>
+
+
+		<input type="submit" name="publish" value="Publier">
+		<input class="button-grey" type="submit" name="save" value="Brouillon">
+	</form>
+</aside>
+<div class="main-content">
+	{% if events_draft.count() != 0 %}
+	<h2>Vos brouillons</h2>
+	<table class="table">
+		<thead>
+			<tr><th>Titre</th><th>Organisations</th><th>Date de début</th><th>Date de fin</th></tr>
+		</thead>
+		<tbody>
+			{% for event in events_draft %}
+			<tr>
+				<td>{{ event.title }}<a href="/events/edit/{{event.pk}}" class="button button-small">Éditer</a></td>
+				<td>{{ ', '.join(event.organisations) }}</td>
+				<td>{{ momentjs(event.datetime_first).calendar() }}</td>
+				<td>{{ momentjs(event.datetime_last).calendar() }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+
+	<h2>Vos prochains événements</h2>
+	<table class="table">
+		<thead>
+			<tr><th>Titre</th><th>Organisations</th><th>Date de début</th><th>Date de fin</th></tr>
+		</thead>
+		<tbody>
+			{% for event in events_published %}
+			<tr>
+				<td>{{ event.title }}<a href="/events/edit/{{event.pk}}" class="button button-small">Éditer</a></td>
+				<td>{{ ', '.join(event.organisations) }}</td>
+				<td>{{ momentjs(event.datetime_first).calendar() }}</td>
+				<td>{{ momentjs(event.datetime_last).calendar() }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<h2>Vos anciens événements</h2>
+	<table class="table">
+		<thead>
+			<tr><th>Titre</th><th>Organisations</th><th>Date de début</th><th>Date de fin</th></tr>
+		</thead>
+		<tbody>
+			{% for event in events_old_published %}
+			<tr>
+				<td>{{ event.title }}<a href="/events/edit/{{event.pk}}" class="button button-small">Éditer</a></td>
+				<td>{{ ', '.join(event.organisations) }}</td>
+				<td>{{ momentjs(event.datetime_first).calendar() }}</td>
+				<td>{{ momentjs(event.datetime_last).calendar() }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+		
+</div>
+{% endblock %}

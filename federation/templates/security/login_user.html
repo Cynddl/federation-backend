@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% from "formhelpers.html" import render_field %}
+{% block content %}
+<h2>Connection</h2>
+<form method="POST" class="form-inline">
+	{{ login_user_form.hidden_tag() }}
+ 	{{ render_field( login_user_form.email ) }}
+  	{{ render_field( login_user_form.password ) }}
+  	<p><input type="submit" value="Connexion"></p>
+</form>
+{% endblock %}

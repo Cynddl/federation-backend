@@ -1,0 +1,44 @@
+<table width="600px">
+
+<tr><td>
+
+<div dir="ltr">
+<font face="Palatino Linotype, Book Antiqua, Palatino, serif">
+
+<img src="http://federation.ens-lyon.fr/assets/images/header_newsletter_fede.png" alt="">
+
+<br>
+<big><big><big><font color="c83737"><i>{{title|default('Édito')}}</i></font></big></big></big>
+<br>
+<i>Semaine du {{day_first.to('Europe/Paris').format('D MMMM', 'fr').decode('utf-8')}} au {{day_last.to('Europe/Paris').replace(days=-1).format('DD MMMM', 'fr').decode('utf-8')}}</i>
+
+<br><br>
+
+
+{{news_form.message.data|nl2br}}
+
+<br><hr width="600" align="left" color="#c83737"><br>
+
+{% for (d_1, events) in day_events %}
+{% if events != 0 %}
+  <p><font color="c83737"><big><i>{{d_1.format('dddd DD', 'fr').decode('utf-8')}}</i></big></font></p>
+  <ul>
+    {% for event in events %}
+      <li><b>{{event.title}}</b><br>{{arrow.get(event.datetime_first).to('Europe/Paris').format('HH:mm', 'fr')}}. {{event.places|join(', ')}}. Par {{event.organisations|join(', ')}}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endfor %}
+
+<br>
+
+<p><font color="c83737">Retrouvez-nous sur notre site <a style="color: #c83737;" href="http://federation.ens-lyon.fr"><span style="color: #c83737;">federation.ens-lyon.fr</span></a> ou contactez-nous par courriel à l'adresse <a style="color: #c83737;" href="mailto:federation@ens-lyon.fr" target="_blank"><span style="color: #c83737;">federation@ens-lyon.fr</span></a>. Nous sommes aussi présents sur <a style="color: #c83737;" href="https://www.facebook.com/FAENSL"><span style="color: #c83737;">Facebook</span></a> et sur <a style="color: #c83737;" href="https://twitter.com/FAENSL"><span style="color: #c83737;">Twitter</span></a> !
+</font></p>
+
+<img src="http://federation.ens-lyon.fr/assets/images/footer_newsletter_fede.png" alt="">
+
+</font>
+</div>
+
+</td></tr>
+</table>
