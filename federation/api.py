@@ -4,7 +4,7 @@
 from flask import Blueprint, current_app, request, make_response, jsonify
 from functools import wraps, update_wrapper
 
-from models import Event
+from models import Event, DossierCSE
 
 from datetime import datetime, date, timedelta
 import facebook
@@ -21,6 +21,7 @@ except ImportError:
 api = Blueprint('api', __name__, url_prefix='/api')
 app = current_app
 
+from werkzeug import url_decode
 
 import simplejson as json
 from bson.objectid import ObjectId
@@ -177,12 +178,34 @@ def return_month_events(year=None, month=None):
     return MongoengineEncoder(ensure_ascii=False).encode(list(events.all())).encode('utf-8')
 
 
+# ('boursier_montant', u''), ('financement_autre_source', u''), ('financement_parents', u'Non'), ('email', u'aa@aa.fr')])
+
 @api.route('/cse/demande', methods=['GET', 'POST', 'OPTIONS'])
-@crossdomain(origin='http://localhost:5656', headers='Origin, X-Requested-With, Content-Type, Accept')
+@crossdomain(origin='http://localhost:9000', headers='Origin, X-Requested-With, Content-Type, Accept')
 def cse_demande():
-    print request.args
-    data = request.form
-    # data['apl_montant'] = float(data['apl_montant'])
-    # print data
-    # dossier = DossierCSE(**data)
-    return jsonify(foo='blabla')
+    def mk_float(s):
+        s = s.strip()
+        return float(s) if s else 0
+
+    data = url_decode(request.data)
+
+    data['logement_gracieux'] = data['logement_gracieux'] == 'Oui'
+    print data['logement_montant']
+    data['logement_montant'] = mk_float(data['logement_montant'])
+
+    data['financement_famille'] = data['financement_famille'] == 'Oui'
+    data['financement_famille_montant'] = mk_float(data['financement_famille_montant'])
+    data['financement_autre'] = data['financement_autre'] == 'Oui'
+    data['financement_autre_montant'] = mk_float(data['financement_autre_montant'])
+
+    data['apl'] = data['apl'] == 'Oui'
+    data['apl_montant'] = mk_float(data['apl_montant'])
+
+    data['boursier'] = data['boursier'] == 'Oui'
+    data['boursier_montant'] = mk_float(data['boursier_montant'])
+
+    print data.to_dict()
+    demande = DossierCSE(**data.to_dict())
+    demande.save()
+
+    return jsonify(result='saved')

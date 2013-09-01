@@ -136,17 +136,17 @@ class DossierCSE(db.Document):
     annee_entree = db.StringField()
 
     boursier = db.BooleanField()
-    boursier_montant = db.DecimalField()
+    boursier_montant = db.FloatField()
 
     logement_gracieux = db.BooleanField()
-    logement_montant = db.DecimalField()
+    logement_montant = db.FloatField()
 
     apl = db.BooleanField()
-    apl_montant = db.DecimalField()
+    apl_montant = db.FloatField()
 
     financement_parents = db.BooleanField()
-    financement_parents_montant = db.DecimalField()
+    financement_parents_montant = db.FloatField()
 
     financement_autre = db.BooleanField()
-    financement_autre_source = db.DecimalField()
-    financement_autre_montant = db.DecimalField()
+    financement_autre_source = db.StringField()
+    financement_autre_montant = db.FloatField()
