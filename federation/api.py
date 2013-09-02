@@ -179,7 +179,7 @@ def return_month_events(year=None, month=None):
 
 
 @api.route('/cse/demande', methods=['GET', 'POST', 'OPTIONS'])
-@crossdomain(origin='http://localhost:9000', headers='Origin, X-Requested-With, Content-Type, Accept')
+@crossdomain(origin=['http://localhost:9000', 'http://federation.ens-lyon.fr'], headers='Origin, X-Requested-With, Content-Type, Accept')
 def cse_demande():
     def mk_float(s):
         s = s.strip()

@@ -4,7 +4,7 @@
 from federation import app
 from flask import render_template, request, redirect
 from . import db
-from models import Event, EventForm, Newsletter, make_choices, UserForm
+from models import Event, EventForm, Newsletter, make_choices, UserForm, DossierCSE
 
 from flask.ext.security import login_required, current_user, roles_required, roles_accepted
 from flask.ext.security.utils import encrypt_password
@@ -108,10 +108,15 @@ def newsletter():
         return render_template('newsletter.html', news_form=news_form, events=events)
 
 
-@app.route('/cse')
-@roles_accepted('CSE-Dossier', 'CSE-Demande')
+@app.route('/cse', methods=['GET', 'POST'])
+@roles_accepted('CSE-Dossier', 'CSE-Anonyme')
 def cse():
-    return render_template('logged.html')
+    dossiers_cse = DossierCSE.objects()
+    role_anonyme = user_datastore.find_role('CSE-Anonyme')
+    users_cse_anonyme = [user.prenom + ' ' + user.nom for user in User.objects(roles=role_anonyme)]
+    role_dossier = user_datastore.find_role('CSE-Dossier')
+    users_cse_dossier = [user.prenom + ' ' + user.nom for user in User.objects(roles=role_dossier)]
+    return render_template('cse.html', dossiers_cse=dossiers_cse, users_cse_anonyme=users_cse_anonyme, users_cse_dossier=users_cse_dossier)
 
 
 @app.route('/admin/edit/<string:id>', methods=['GET', 'POST'])

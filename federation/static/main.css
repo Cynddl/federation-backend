@@ -503,7 +503,7 @@ body {
   width: 300px;
   background-color: #ffffff;
   border-right: 2px solid #cdcdcd;
-  color: #fbd9d0;
+  color: #505050;
 }
 .sidebar h3 {
   font-weight: lighter;
@@ -609,6 +609,9 @@ textarea {
   font-weight: lighter;
   margin-right: 1em;
   margin-bottom: 0.5em;
+}
+.content h2 + p {
+  margin-top: 0;
 }
 .content form input[type="password"], .content form
 input[type="text"], .content form select, .content form textarea {
