@@ -1,0 +1,56 @@
+{% extends "logged.html" %}
+
+{% block head_assets %}
+	{{super()}}
+	{% assets "main_js" %}
+		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+	{% endassets %}
+	{% assets "main_css" %}
+		<link rel="stylesheet" href="{{ ASSET_URL }}">
+	{% endassets %}
+{% endblock %}
+
+{% from "formhelpers.html" import render_field %}
+
+{% block content %}
+<aside class="sidebar">
+	<form method="POST">
+		<h2>Dossiers CSE</h2>
+		<p>Les demandes de financement CSE sont actuellements ouvertes.</p>
+		<p><input type="submit" disabled="disabled" name="close" value="Fermer les inscriptions"></p>
+		<h2>Accès</h2>
+		<p>Les personnes suivantes ont accès aux dossiers de la CSE. Ces dossiers sont anonymisés pour l'étude de financement.</p>
+		<h3>Accès aux identifiants</h3>
+		<p>{{', '.join(users_cse_dossier)}}</p>
+		<h3>Accès aux dossiers anonymisés</h3>
+		<p>{{', '.join(users_cse_anonyme)}}</p>
+	</form>
+</aside>
+<div class="main-content">
+	{% if current_user.has_role('CSE-Dossier') %}
+	<h2>Suivi de dossiers</h2>
+	<table class="table">
+		<thead>
+			<tr><th>Nom</th><th>Prénom</th><th>Courriel</th><th>Numéro de dossier</th></tr>
+		</thead>
+		<tbody>
+			{% for dossier in dossiers_cse %}
+				<tr><td>{{dossier.nom}}</td><td>{{dossier.prenom}}</td><td>{{dossier.email}}</td><td>{{dossier.id}}</td></tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% elif current_user.has_role('CSE-Anonyme') %}
+	<h2>Accès aux dossiers anonymisés</h2>
+	<table class="table">
+		<thead>
+			<tr><th>Numéro de dossier</th></tr>
+		</thead>
+		<tbody>
+			{% for dossier in dossiers_cse %}
+				<tr></td><td>{{dossier.id}} <a class="button" href="/cse/{{dossier.id}}">Afficher</a></td></tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+</div>
+{% endblock %}
