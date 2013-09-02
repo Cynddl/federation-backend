@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 from flask.ext.security import Security, MongoEngineUserDatastore, UserMixin, RoleMixin
-# from flask.ext.security.utils import encrypt_password
 from . import app, db
-# from models import User
 
 
 class Role(db.Document, RoleMixin):
