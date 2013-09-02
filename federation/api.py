@@ -178,8 +178,6 @@ def return_month_events(year=None, month=None):
     return MongoengineEncoder(ensure_ascii=False).encode(list(events.all())).encode('utf-8')
 
 
-# ('boursier_montant', u''), ('financement_autre_source', u''), ('financement_parents', u'Non'), ('email', u'aa@aa.fr')])
-
 @api.route('/cse/demande', methods=['GET', 'POST', 'OPTIONS'])
 @crossdomain(origin='http://localhost:9000', headers='Origin, X-Requested-With, Content-Type, Accept')
 def cse_demande():
