@@ -68,6 +68,7 @@ def make_choices(choices, selected=[], name=None):
 
 
 class EventForm(Form):
+    """ Form to add or edit an event. """
     title = TextField('', [Required()])
     description = TextAreaField()
 
@@ -87,6 +88,7 @@ class EventForm(Form):
 
 
 class UserForm(Form):
+    """ Form to add or edit a user. """
     email = TextField('Email', [Required()])
     password = PasswordField('Mot de passe')
     nom = TextField('Nom', [Required()])
@@ -96,6 +98,7 @@ class UserForm(Form):
 
 
 class Newsletter(Form):
+    """ Form to generate a newsletter. """
     title = TextField()
     message = TextAreaField(default=u'Bonjour à tous,\n\nAu programme de cette newsletter…\n\nLa Com\'')
 
@@ -129,6 +132,7 @@ class Event(db.Document):
 
 
 class DossierCSE(db.Document):
+    """ MongoDB scheme for CSE documents. """
     nom = db.StringField()
     prenom = db.StringField()
     email = db.StringField()

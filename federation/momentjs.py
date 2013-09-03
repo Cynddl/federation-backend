@@ -5,6 +5,7 @@ from jinja2 import Markup
 
 
 class momentjs(object):
+    """ This class generate momentjs scripts on-the-fly, to parse correctly dates on the browser. """
     def __init__(self, timestamp):
         self.timestamp = timestamp
 

@@ -3,7 +3,6 @@
 
 from federation import app
 from flask import render_template, request, redirect
-from . import db
 from models import Event, EventForm, Newsletter, make_choices, UserForm, DossierCSE
 
 from flask.ext.security import login_required, current_user, roles_required, roles_accepted
@@ -11,9 +10,6 @@ from flask.ext.security.utils import encrypt_password
 from auth import user_datastore
 
 import arrow
-import dateutil.parser
-from datetime import datetime, timedelta
-from bson.objectid import ObjectId
 
 from auth import User
 
@@ -97,7 +93,6 @@ def newsletter():
         date_first = arrow.get(news_form.datetime_first.data).datetime
         date_last = arrow.get(news_form.datetime_last.data).datetime
         events = Event.objects(datetime_first__gte=date_first, datetime_first__lte=date_last, status='published').order_by('date_first')
-        print len(events)
 
     if 'send' in request.form and news_form.validate_on_submit():
         day_range = arrow.Arrow.span_range('day', date_first, date_last)
