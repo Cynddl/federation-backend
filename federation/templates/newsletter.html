@@ -2,10 +2,10 @@
 
 {% block head_assets %}
 	{{super()}}
-	{% assets "pickadate_js" %}
+	{% assets "main_js" %}
 		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
     {% endassets %}
-    {% assets "pickadate_css" %}
+    {% assets "main_css" %}
         <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
 {% endblock %}
