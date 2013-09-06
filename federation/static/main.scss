@@ -58,9 +58,10 @@ a:hover {
 		display: inline;
 		li {
 			display: inline-block;
+			padding: 0 0.5em;
 			a {
 				color: $beige;
-				padding: 1em;
+				padding: 1em 0;
 			}
 			a:hover {
 				color: white;
@@ -217,17 +218,18 @@ body {
 		margin-bottom: 0.5em;
 	}
 
-<<<<<<< HEAD
-=======
 	h2 + p {
 		margin-top: 0;
 	}
 
->>>>>>> new_branch_name
 	form {
+		input, textarea, select {
+			font-size: 16px;
+		}
+
 		input[type="text"], input[type="password"], textarea, select {
 			padding: 0.5em 1em;
-			font-weight: lighter;			
+			font-weight: lighter;		
 		}
 
 		input[type="text"].invalid, input[type="password"].invalid, textarea.invalid, select.invalid, div.invalid {
@@ -238,6 +240,7 @@ body {
 			background-color: white;
 			color: $grey;
 			border: 1px solid $light-grey;
+			color: $medium-grey;
 			box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
 		}
 
@@ -259,18 +262,26 @@ body {
 	}
 }
 
-.content.box-content {
+.box-content {
 	margin: auto;
 	position: absolute;
 	top: 0; left: 0; bottom: 0; right: 0;
 
 	height: 60%;
-	min-width: 260px;
-	max-width: 260px;
+	min-width: 400px;
+	max-width: 400px;
 	min-height: 300px;
 	padding: 40px;
 
-	background-color: $beige;
+	background-color: $grey;
+
+	form {
+		width: 100%;
+		input {
+			width: 100%;
+			height: 40px;
+		}
+	}
 }
 
 

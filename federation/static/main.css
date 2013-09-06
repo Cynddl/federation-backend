@@ -484,10 +484,11 @@ a:hover {
 }
 .top-bar ul li {
   display: inline-block;
+  padding: 0 0.5em;
 }
 .top-bar ul li a {
   color: #fbd9d0;
-  padding: 1em;
+  padding: 1em 0;
 }
 .top-bar ul li a:hover {
   color: #ffffff;
@@ -582,9 +583,6 @@ textarea {
   left: 300px;
   right: 0;
 }
-.content {
-  >>>>>>> new_branch_name;
-}
 .content table.table {
   width: 100%;
   border-spacing: 0;
@@ -616,6 +614,9 @@ textarea {
 .content h2 + p {
   margin-top: 0;
 }
+.content form input, .content form select, .content form textarea {
+  font-size: 16px;
+}
 .content form input[type="password"], .content form
 input[type="text"], .content form select, .content form textarea {
   padding: 0.5em 1em;
@@ -633,6 +634,7 @@ textarea {
   background-color: #ffffff;
   color: #cdcdcd;
   border: 1px solid #e7e7e7;
+  color: #505050;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 .content form .selectize-input input[type="text"] {
@@ -651,7 +653,7 @@ form select, .content form textarea {
   display: inline-block;
   margin-bottom: 0.5em;
 }
-.content.box-content {
+.box-content {
   margin: auto;
   position: absolute;
   top: 0;
@@ -659,11 +661,18 @@ form select, .content form textarea {
   bottom: 0;
   right: 0;
   height: 60%;
-  min-width: 260px;
-  max-width: 260px;
+  min-width: 400px;
+  max-width: 400px;
   min-height: 300px;
   padding: 40px;
-  background-color: #fbd9d0;
+  background-color: #cdcdcd;
+}
+.box-content form {
+  width: 100%;
+}
+.box-content form input {
+  width: 100%;
+  height: 40px;
 }
 header.title {
   height: 91px;

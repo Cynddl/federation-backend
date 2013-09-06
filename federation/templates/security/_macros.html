@@ -1,0 +1,16 @@
+{% macro render_field_with_errors(field) %}
+  <p>
+    {{ field.label }} {% if field.errors %}{% if 'class' in kwargs %}{{ field(class='invalid ' + kwargs.pop('class'), **kwargs)|safe }}{% else %}{{ field(class='invalid', **kwargs)|safe }}{% endif %}{% else %}{{ field(**kwargs)|safe }}{% endif %}
+    {% if field.errors %}
+      <ul>
+      {% for error in field.errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  </p>
+{% endmacro %}
+
+{% macro render_field(field) %}
+  <p>{{ field(**kwargs)|safe }}</p>
+{% endmacro %}
