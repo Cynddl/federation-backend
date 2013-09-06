@@ -1,10 +1,10 @@
 // Typography
 // --------------------------------------------------
 
-@include font-face(ProximaNova, 'fonts/proxima-nova/proximanova-light-webfont', 300);
-@include font-face(ProximaNova, 'fonts/proxima-nova/proximanova-regular-webfont', 400);
-@include font-face(ProximaNova, 'fonts/proxima-nova/proximanova-semibold-webfont', 600);
-@include font-face(ProximaNova, 'fonts/proxima-nova/proximanova-bold-webfont', 700);
+@include font-face(ProximaNova, 'fonts/proxima-nova/ProximaNovaLight', 300);
+@include font-face(ProximaNova, 'fonts/proxima-nova/ProximaNovaRegular', 400);
+@include font-face(ProximaNova, 'fonts/proxima-nova/ProximaNovaSemibold', 600);
+@include font-face(ProximaNova, 'fonts/proxima-nova/ProximaNovaBold', 700);
 
 body {
   font-family: ProximaNova;
