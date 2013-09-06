@@ -82,21 +82,20 @@
 	</form>
 </aside>
 <div class="main-content">
-	{% if events_draft.count() != 0 %}
-	<h2>Vos brouillons</h2>
-	{{events_table(events_draft)}}
-	{% endif %}
-
 	{% if current_user.has_role('Administrateur') or current_user.has_role('Éditeur') %}
+		{% if events_draft.count() != 0 %}
 		<h2>Brouillons <small>(attention aux conflits d'édition)</small></h2>
 		{{events_table(events_draft)}}
+		{% endif %}
 		<h2>Prochains événements</h2>
 		{{events_table(events_published, admin=True)}}
 		<h2>Anciens événements</h2>
 		{{events_table(events_old_published, admin=True)}}
 	{% else %}
+		{% if events_draft.count() != 0 %}
 		<h2>Vos brouillons</h2>
 		{{events_table(events_draft)}}
+		{% endif %}
 		<h2>Vos prochains événements</h2>
 		{{events_table(events_published)}}	
 		<h2>Vos anciens événements</h2>
