@@ -22,6 +22,7 @@ class User(db.Document, UserMixin):
     active = db.BooleanField(default=True)
     roles = db.ListField(db.ReferenceField(Role), default=[])
 
+    associations = db.ListField(db.StringField(max_length=255), default=[])
     nom = db.StringField(max_length=255)
     prenom = db.StringField(max_length=255)
 

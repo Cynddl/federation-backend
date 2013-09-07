@@ -130,8 +130,11 @@ def admin(id=None):
         user_form = UserForm()
         title_aside = u'Créer un utilisateur'
 
+    if user_form.associations.data:
+        user_form.associations.choices = make_choices(user_form.associations_choices, selected=user_form.associations.data, name='Associations')
+
     if user_form.roles.data:
-        user_form.roles.choices = make_choices(user_form.roles_choices, selected=user_form.roles.data, name='Rôles')
+        user_form.roles.choices = make_choices(user_form.roles_choices, selected=user_form.roles.data, name=u'Rôles')
 
     if user_form.validate_on_submit():
         user.email = user_form.email.data
@@ -143,17 +146,15 @@ def admin(id=None):
         roles_list = [user_datastore.find_or_create_role(role_name).to_dbref() for role_name in user_form.roles.data]
         user.roles = roles_list
 
+        user.associations = user_form.associations.data
+
         user.save()
 
-        # user = user_datastore.get_user(user.id)
-        # for role_name in user_form.roles.data:
-        #     role = user_datastore.find_or_create_role(role_name)
-        #     user_datastore.add_role_to_user(user, role)
         if id:
             return redirect('/admin')
 
-    def pretty_roles(roles):
-        return ', '.join([r.name for r in roles])
+    def pretty_dict(_dict, key):
+        return ', '.join([getattr(r, key) for r in _dict])
 
     users = User.objects()
-    return render_template('admin.html', users=users, arrow=arrow, user_form=user_form, title_aside=title_aside, pretty_roles=pretty_roles)
+    return render_template('admin.html', users=users, arrow=arrow, user_form=user_form, title_aside=title_aside, pretty_dict=pretty_dict)

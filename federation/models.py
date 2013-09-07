@@ -86,15 +86,18 @@ class EventForm(Form):
     places_choices = [u'Foyer', u'Festive', u'Théâtre Kantor']
     places = SelectFieldWithDisable('lieux', validators=[Required()], choices=make_choices(places_choices, name='Lieux'))
 
-
 class UserForm(Form):
     """ Form to add or edit a user. """
     email = TextField('Email', [Required()])
     password = PasswordField('Mot de passe')
     nom = TextField('Nom', [Required()])
     prenom = TextField('Prénom', [Required()])
+
+    associations_choices = []
+    associations = SelectFieldWithDisable('Associations', choices=make_choices(associations_choices, name='Associations'))
+
     roles_choices = [u'Administrateur', u'Éditeur', u'CSE-Anonyme', u'CSE-Dossier']
-    roles = SelectFieldWithDisable('roles', validators=[], choices=make_choices(roles_choices, name='Roles'))
+    roles = SelectFieldWithDisable('roles', choices=make_choices(roles_choices, name=u'Rôles'))
 
 
 class Newsletter(Form):

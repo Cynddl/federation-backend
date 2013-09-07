@@ -188,52 +188,46 @@ p + .drop-cap {
   font-family: ProximaNova;
   font-weight: 300;
   font-style: normal;
-  src: url(fonts/proxima-nova/proximanova-light-webfont.eot);
-  src: url(fonts/proxima-nova/proximanova-light-webfont.eot?#iefix)
+  src: url(fonts/proxima-nova/ProximaNovaLight.eot);
+  src: url(fonts/proxima-nova/ProximaNovaLight.eot?#iefix)
     format(embedded-opentype),
-    url(fonts/proxima-nova/proximanova-light-webfont.woff) format(woff),
-    url(fonts/proxima-nova/proximanova-light-webfont.ttf)
-    format(truetype),
-    url(fonts/proxima-nova/proximanova-light-webfont.svg#ProximaNova)
-    format(svg);
+    url(fonts/proxima-nova/ProximaNovaLight.woff) format(woff),
+    url(fonts/proxima-nova/ProximaNovaLight.ttf) format(truetype),
+    url(fonts/proxima-nova/ProximaNovaLight.svg#ProximaNova) format(svg);
 }
 @font-face {
   font-family: ProximaNova;
   font-weight: 400;
   font-style: normal;
-  src: url(fonts/proxima-nova/proximanova-regular-webfont.eot);
-  src: url(fonts/proxima-nova/proximanova-regular-webfont.eot?#iefix)
+  src: url(fonts/proxima-nova/ProximaNovaRegular.eot);
+  src: url(fonts/proxima-nova/ProximaNovaRegular.eot?#iefix)
     format(embedded-opentype),
-    url(fonts/proxima-nova/proximanova-regular-webfont.woff) format(woff),
-    url(fonts/proxima-nova/proximanova-regular-webfont.ttf)
-    format(truetype),
-    url(fonts/proxima-nova/proximanova-regular-webfont.svg#ProximaNova)
-    format(svg);
+    url(fonts/proxima-nova/ProximaNovaRegular.woff) format(woff),
+    url(fonts/proxima-nova/ProximaNovaRegular.ttf) format(truetype),
+    url(fonts/proxima-nova/ProximaNovaRegular.svg#ProximaNova) format(svg);
 }
 @font-face {
   font-family: ProximaNova;
   font-weight: 600;
   font-style: normal;
-  src: url(fonts/proxima-nova/proximanova-semibold-webfont.eot);
-  src: url(fonts/proxima-nova/proximanova-semibold-webfont.eot?#iefix)
+  src: url(fonts/proxima-nova/ProximaNovaSemibold.eot);
+  src: url(fonts/proxima-nova/ProximaNovaSemibold.eot?#iefix)
     format(embedded-opentype),
-    url(fonts/proxima-nova/proximanova-semibold-webfont.woff)
-    format(woff), url(fonts/proxima-nova/proximanova-semibold-webfont.ttf)
-    format(truetype),
-    url(fonts/proxima-nova/proximanova-semibold-webfont.svg#ProximaNova)
+    url(fonts/proxima-nova/ProximaNovaSemibold.woff) format(woff),
+    url(fonts/proxima-nova/ProximaNovaSemibold.ttf) format(truetype),
+    url(fonts/proxima-nova/ProximaNovaSemibold.svg#ProximaNova)
     format(svg);
 }
 @font-face {
   font-family: ProximaNova;
   font-weight: 700;
   font-style: normal;
-  src: url(fonts/proxima-nova/proximanova-bold-webfont.eot);
-  src: url(fonts/proxima-nova/proximanova-bold-webfont.eot?#iefix)
+  src: url(fonts/proxima-nova/ProximaNovaBold.eot);
+  src: url(fonts/proxima-nova/ProximaNovaBold.eot?#iefix)
     format(embedded-opentype),
-    url(fonts/proxima-nova/proximanova-bold-webfont.woff) format(woff),
-    url(fonts/proxima-nova/proximanova-bold-webfont.ttf) format(truetype),
-    url(fonts/proxima-nova/proximanova-bold-webfont.svg#ProximaNova)
-    format(svg);
+    url(fonts/proxima-nova/ProximaNovaBold.woff) format(woff),
+    url(fonts/proxima-nova/ProximaNovaBold.ttf) format(truetype),
+    url(fonts/proxima-nova/ProximaNovaBold.svg#ProximaNova) format(svg);
 }
 body {
   font-family: ProximaNova;
