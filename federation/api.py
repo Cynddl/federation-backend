@@ -187,18 +187,18 @@ def cse_demande():
     data = url_decode(request.data)
 
     data['logement_gracieux'] = data['logement_gracieux'] == 'Oui'
-    print data['logement_montant']
     data['logement_montant'] = mk_float(data['logement_montant'])
 
     data['financement_famille'] = data['financement_famille'] == 'Oui'
     data['financement_famille_montant'] = mk_float(data['financement_famille_montant'])
+
     data['financement_autre'] = data['financement_autre'] == 'Oui'
     data['financement_autre_montant'] = mk_float(data['financement_autre_montant'])
 
     data['apl'] = data['apl'] == 'Oui'
     data['apl_montant'] = mk_float(data['apl_montant'])
 
-    data['boursier'] = data['boursier'] == 'Oui'
+    # data['boursier'] = data['boursier'] == 'Oui'
     data['boursier_montant'] = mk_float(data['boursier_montant'])
 
     print data.to_dict()

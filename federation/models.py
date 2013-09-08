@@ -142,7 +142,7 @@ class DossierCSE(db.Document):
     status = db.StringField(choices=['Auditeur', 'Normalien'])
     annee_entree = db.StringField()
 
-    boursier = db.BooleanField()
+    boursier = db.StringField()
     boursier_montant = db.FloatField()
 
     logement_gracieux = db.BooleanField()
@@ -151,9 +151,11 @@ class DossierCSE(db.Document):
     apl = db.BooleanField()
     apl_montant = db.FloatField()
 
-    financement_parents = db.BooleanField()
-    financement_parents_montant = db.FloatField()
+    financement_famille = db.BooleanField()
+    financement_famille_montant = db.FloatField()
 
     financement_autre = db.BooleanField()
     financement_autre_source = db.StringField()
     financement_autre_montant = db.FloatField()
+
+    commentaires = db.StringField()

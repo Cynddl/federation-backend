@@ -43,11 +43,21 @@
 	<h2>Accès aux dossiers anonymisés</h2>
 	<table class="table">
 		<thead>
-			<tr><th>Numéro de dossier</th></tr>
+			<tr><th>Numéro de dossier</th><th>Status</th><th>Année d'entrée</th><th>Boursier</th><th>Logement</th><th>APL</th><th>Famille</th><th>Autres sources</th><th>Commentaires</th></tr>
 		</thead>
 		<tbody>
 			{% for dossier in dossiers_cse %}
-				<tr></td><td>{{dossier.id}} <a class="button" href="/cse/{{dossier.id}}">Afficher</a></td></tr>
+				<tr>
+					<td>{{dossier.id}}</td>
+					<td>{{dossier.status}}</td>
+					<td>{{dossier.annee_entree}}</td>
+					<td>{% if dossier.boursier %} {{dossier.boursier}} {% else %} Non {% endif %} {% if dossier.boursier_montant %} ({{dossier.boursier_montant}} €) {% endif %}</td>
+					<td>{% if dossier.logement_gracieux %} Gratuit {% else %} {{dossier.logement_montant}} € {% endif %}</td>
+					<td>{% if dossier.apl %} Oui ({{dossier.apl_montant}} €) {% else %} Non {% endif %}</td>
+					<td>{% if dossier.financement_famille %} Oui {% else %} Non {% endif %} {% if dossier.financement_famille_montant %} ({{dossier.financement_famille_montant}}) {% endif %}</td>
+					<td>{% if dossier.financement_autre %} {{dossier.financement_autre_source}} ({{dossier.financement_autre_montant}}) {% else %} Non {% endif %}</td>
+					<td>{{dossier.commentaires}}</td>
+				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
