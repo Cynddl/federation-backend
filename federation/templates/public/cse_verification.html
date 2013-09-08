@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Votre dossier ({{dossier.prenom}} {{dossier.nom}})</h2>
+
+<p><strong>Année d'entrée</strong> {{dossier.annee_entree}}</p>
+
+<p><strong>Boursier</strong> {%if dossier.boursier %} Oui {% else %} Non {% endif %} / <strong>Montant</strong> {{ dossier.boursier_montant }} €</p>
+
+<p><strong>APL</strong> {%if dossier.apl %} Oui {% else %} Non {% endif %} / <strong>Montant des APL</strong> {{ dossier.apl_montant }} €</p>
+
+<p><strong>Aides familiales</strong> {%if dossier.financement_famille %} Oui {% else %} Non {% endif %} / <strong>Montant</strong> {{ dossier.financement_famille_montant }} €</p>
+
+<p><strong>Autres revenus</strong> {%if dossier.financement_autre %} Oui {% else %} Non {% endif %} / <strong>Montant</strong> {{ dossier.financement_autre_montant }} € / <strong>Source</strong> {{dossier.financement_autre_source}}</p>
+
+<p><strong>Logement gracieux</strong> {%if dossier.logement_gracieux %} Oui {% else %} Non {% endif %} / <strong>Montant du logement</strong> {{ dossier.logement_montant }} €</p>
+
+<p><strong>Commentaires</strong> {% if dossier.commentaires %} {{dossier.commentaires}} {% else %} Aucun {% endif %}
+
+<p>Si ces informations ne sont pas correctes, merci de contacter <a href="mailto:cse.federation@ens-lyon.fr">cse.federation@ens-lyon.fr</a> en indiquant quels champs corriger.</p>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Vérification – demande CSE</h2>
+<p>Sur cette page, vous pouvez vérifier que les informations que vous avez transmises sont bien correctes.</p>
+<form method="POST">
+	{% if error_message %}
+		<p>{{error_message}}</p>
+	{% endif %}
+	<label>Identifiant <input type="text" name="id"></label>
+	<label>Adresse mail <input type="text" name="email"></label>
+	<input type="submit" value="Vérifier">
+</form>
+{% endblock %}

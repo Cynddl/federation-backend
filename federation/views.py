@@ -158,3 +158,16 @@ def admin(id=None):
 
     users = User.objects()
     return render_template('admin.html', users=users, arrow=arrow, user_form=user_form, title_aside=title_aside, pretty_dict=pretty_dict)
+
+
+@app.route('/public/cse', methods=['GET', 'POST'])
+def public_cse():
+    if 'email' in request.form and 'id' in request.form:
+        try:
+            dossier = DossierCSE.objects(email=request.form['email'], pk=request.form['id']).first()
+            print request.form['email'], dossier
+            return render_template('public/cse_verification.html', dossier=dossier)
+        except Exception, e:
+            return render_template('public/cse.html', error_message='Les identifiants sont incorrects.')
+    else:
+        return render_template('public/cse.html')
