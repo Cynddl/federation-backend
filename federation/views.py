@@ -78,7 +78,7 @@ def events(id=None):
 
     events_published = Event.objects(status='published', datetime_first__gte=today, **filter_role).order_by('datetime_first')
     events_old_published = Event.objects(status='published', datetime_first__lt=today, **filter_role).order_by('-datetime_first')
-    events_draft = Event.objects(status='draft').order_by('datetime_first', **filter_role).order_by('datetime_first')
+    events_draft = Event.objects(status='draft', **filter_role).order_by('datetime_first')
 
     return render_template('events.html', events_draft=events_draft, events_old_published=events_old_published, events_published=events_published, add_form=add_form, title_aside=title_aside, icons=icons)
 
