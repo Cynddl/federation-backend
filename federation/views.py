@@ -9,6 +9,8 @@ from flask.ext.security import login_required, current_user, roles_required, rol
 from flask.ext.security.utils import encrypt_password
 from auth import user_datastore
 
+from . import texenv
+
 import arrow
 
 from auth import User
@@ -171,3 +173,19 @@ def public_cse():
             return render_template('public/cse.html', error_message='Les identifiants sont incorrects.')
     else:
         return render_template('public/cse.html')
+
+
+@app.route('/public/affiche')
+def public_affiche():
+    from api import get_week_bounds
+
+    date_first, date_last = get_week_bounds()
+    events = Event.objects(datetime_first__gte=date_first, datetime_first__lte=date_last, status='published').order_by('date_first')
+
+    print events
+    day_range = arrow.Arrow.span_range('day', date_first, date_last)
+    day_events = [(d_1, [e for e in events if e['datetime_first'] > d_1.naive and e['datetime_first'] < d_2.naive]) for (d_1, d_2) in day_range]
+    day_events = [(d_1, events) for (d_1, events) in day_events]
+
+    template = texenv.get_template('affiche.tex')
+    return template.render(day_events=day_events, day_range=day_range, arrow=arrow)

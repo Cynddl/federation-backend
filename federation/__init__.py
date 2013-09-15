@@ -29,6 +29,34 @@ app.jinja_env.globals['momentjs'] = momentjs
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
+
+# Add a LaTex env for Jinja2
+
+LATEX_SUBS = (
+    (re.compile(r'\\'), r'\\textbackslash'),
+    (re.compile(r'([{}_#%&$])'), r'\\\1'),
+    (re.compile(r'~'), r'\~{}'),
+    (re.compile(r'\^'), r'\^{}'),
+    (re.compile(r'"'), r"''"),
+    (re.compile(r'\.\.\.+'), r'\\ldots'),
+)
+
+def escape_tex(value):
+    newval = value
+    for pattern, replacement in LATEX_SUBS:
+        newval = pattern.sub(replacement, newval)
+    return newval
+
+texenv = app.jinja_env.overlay()
+texenv.block_start_string = '((*'
+texenv.block_end_string = '*))'
+texenv.variable_start_string = '((('
+texenv.variable_end_string = ')))'
+texenv.comment_start_string = '((='
+texenv.comment_end_string = '=))'
+texenv.filters['escape_tex'] = escape_tex
+
+
 # Connection to MongoDB
 db = MongoEngine(app)
 
