@@ -24,7 +24,7 @@
 		<tbody>
 			{% for event in events %}
 			<tr>
-				<td>{{ event.title }}<a href="/events/edit/{{event.pk}}" class="button button-small">Éditer</a></td>
+				<td>{{ event.title }}<a href="/events/edit/{{event.pk}}" class="button button-small">Éditer</a><a href="/events/delete/{{event.pk}}" class="button button-small">✘</a></td>
 				{% if current_user.has_role('Administrateur') or current_user.has_role('Éditeur') %}
 				<td>{{event.author.prenom}} {{event.author.nom}}</td>
 				{% endif %}
@@ -82,7 +82,7 @@
 	</form>
 </aside>
 <div class="main-content">
-	{% if current_user.has_role('Administrateur') or current_user.has_role('Éditeur') %}
+	{% if not current_user.has_role('Administrateur') and not current_user.has_role('Éditeur') %}
 		{% if events_draft.count() != 0 %}
 		<h2>Brouillons <small>(attention aux conflits d'édition)</small></h2>
 		{{events_table(events_draft)}}
@@ -96,10 +96,10 @@
 		<h2>Vos brouillons</h2>
 		{{events_table(events_draft)}}
 		{% endif %}
-		<h2>Vos prochains événements</h2>
+		<h2>Prochains événements ({{', '.join(current_user.associations)}})</h2>
 		{{events_table(events_published)}}	
-		<h2>Vos anciens événements</h2>
-		{{events_table(events_old_published)}}
+		{#<h2>Vos anciens événements</h2>
+		{{events_table(events_old_published)}}#}
 	{% endif %}
 </div>
 {% endblock %}

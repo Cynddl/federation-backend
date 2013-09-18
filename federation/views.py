@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from federation import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, flash
 from models import Event, EventForm, Newsletter, make_choices, UserForm, DossierCSE
+
+from mongoengine import ValidationError, DoesNotExist
 
 from flask.ext.security import login_required, current_user, roles_required, roles_accepted
 from flask.ext.security.utils import encrypt_password
@@ -189,3 +191,17 @@ def public_affiche():
 
     template = texenv.get_template('affiche.tex')
     return template.render(day_events=day_events, day_range=day_range, arrow=arrow)
+
+
+@app.route('/events/delete/<string:id>')
+@login_required
+def delete_event(id):
+    """ Delete a single event. """
+    try:
+        event = Event.objects.get(id=id)
+        event.delete()
+        flash(u'L\'événement %s a bien été supprimé.' % id.encode('utf-8'))
+        return redirect('/events')
+    except (DoesNotExist, ValidationError):
+        flash(u'L\'événement %s est inconnu.' % id.encode('utf-8'))
+        return redirect('/events')
