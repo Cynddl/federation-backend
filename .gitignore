@@ -1,5 +1,6 @@
 venv
 .DS_Store
+/federation/static/.webassets-cache/
 
 *.py[cod]
 
