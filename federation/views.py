@@ -66,25 +66,27 @@ def events(id=None):
         event.datetime_last = arrow.get(add_form.datetime_last.data).datetime
         event.update_timezone()
 
-        event.status = 'published' if 'publish' in request.form else 'draft'
+        if current_user.has_role('Administrateur') or current_user.has_role('Éditeur'):
+            event.status = 'published' if 'publish' in request.form else 'draft'
+        else:
+            event.status = 'validation' if 'publish' in request.form else 'draft'
 
         event.save()
         if id:
             return redirect('/events')
 
-    today = arrow.now().date()
-
     # Filter the events for non-admin users
     if not current_user.has_role('Administrateur'):
-        filter_role = {'author': current_user.id}
+        filter_role = {'organisations__in': current_user.associations}
     else:
         filter_role = {}
 
-    events_published = Event.objects(status='published', datetime_first__gte=today, **filter_role).order_by('datetime_first')
-    events_old_published = Event.objects(status='published', datetime_first__lt=today, **filter_role).order_by('-datetime_first')
+    today = arrow.now().date()
     events_draft = Event.objects(status='draft', **filter_role).order_by('datetime_first')
+    events_validation = Event.objects(status='validation', datetime_first__gte=today, **filter_role).order_by('datetime_first')
+    events_published = Event.objects(status='published', datetime_first__gte=today).order_by('datetime_first')
 
-    return render_template('events.html', events_draft=events_draft, events_old_published=events_old_published, events_published=events_published, add_form=add_form, title_aside=title_aside, icons=icons)
+    return render_template('events.html', events_draft=events_draft, events_validation=events_validation, events_published=events_published, add_form=add_form, title_aside=title_aside, icons=icons)
 
 
 @app.route('/newsletter', methods=['GET', 'POST'])

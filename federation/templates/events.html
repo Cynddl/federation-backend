@@ -12,7 +12,7 @@
 
 {% from "formhelpers.html" import render_field %}
 
-{% macro events_table(events, admin=False) -%}
+{% macro events_table(events) -%}
 <table class="table">
 		<thead>
 		{% if current_user.has_role('Administrateur') or current_user.has_role('Éditeur') %}
@@ -82,24 +82,28 @@
 	</form>
 </aside>
 <div class="main-content">
-	{% if not current_user.has_role('Administrateur') and not current_user.has_role('Éditeur') %}
+	{% if current_user.has_role('Administrateur') or current_user.has_role('Éditeur') %}
 		{% if events_draft.count() != 0 %}
 		<h2>Brouillons <small>(attention aux conflits d'édition)</small></h2>
 		{{events_table(events_draft)}}
 		{% endif %}
+		{% if events_validation.count() != 0 %}
+		<h2>En attente de validation</h2>
+		{{events_table(events_validation)}}
+		{% endif %}
 		<h2>Prochains événements</h2>
-		{{events_table(events_published, admin=True)}}
-		<h2>Anciens événements</h2>
-		{{events_table(events_old_published, admin=True)}}
+		{{events_table(events_published)}}
 	{% else %}
 		{% if events_draft.count() != 0 %}
-		<h2>Vos brouillons</h2>
+		<h2>Brouillons ({{current_user.associations|join(', ')}})</h2>
 		{{events_table(events_draft)}}
+		{% endif %}
+		{% if events_validation.count() != 0 %}
+		<h2>En attente de validation ({{current_user.associations|join(', ')}})</h2>
+		{{events_table(events_validation)}}
 		{% endif %}
 		<h2>Prochains événements ({{', '.join(current_user.associations)}})</h2>
 		{{events_table(events_published)}}	
-		{#<h2>Vos anciens événements</h2>
-		{{events_table(events_old_published)}}#}
 	{% endif %}
 </div>
 {% endblock %}

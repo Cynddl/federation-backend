@@ -80,11 +80,12 @@ class EventForm(Form):
     time_first = TextField('', [Required(), Regexp('^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$')], default='16:00')
     time_last = TextField('', [Required(), Regexp('^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$')])
 
-    orgas_choices = [u'BDE', u'ENScène!', u'AS', u'Fédération']
+    orgas_choices = User.objects().distinct(field='associations')
     organisations = SelectFieldWithDisable('organisations', validators=[Required()], choices=make_choices(orgas_choices, name='Organisations'))
 
     places_choices = [u'Foyer', u'Festive', u'Théâtre Kantor']
     places = SelectFieldWithDisable('lieux', validators=[Required()], choices=make_choices(places_choices, name='Lieux'))
+
 
 class UserForm(Form):
     """ Form to add or edit a user. """
@@ -117,7 +118,7 @@ class Event(db.Document):
     title = db.StringField()
     description = db.StringField()
 
-    status = db.StringField(choices=['draft', 'published'])
+    status = db.StringField(choices=['draft', 'published', 'validation'])
 
     datetime_first = db.DateTimeField()
     datetime_last = db.DateTimeField()
