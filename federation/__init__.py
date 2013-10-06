@@ -16,14 +16,14 @@ from jinja2 import evalcontextfilter, Markup, escape
 app = Flask(__name__)
 app.config['MONGO_URI'] = os.getenv('MONGOHQ_URI', 'mongodb://dev:dev@localhost/federation')
 app.config['MONGODB_SETTINGS'] = {'db': 'federation', 'host': app.config['MONGO_URI']}
-app.config['FACEBOOK_AUTH'] = os.getenv('FACEBOOK_AUTH', 'CAACEdEose0cBAOBDTWXIkShrnPuMBi1DaR0rTCZBYUPDrfv7ApZBYThapTlWWbrYkhtui9gzqZB3ZBD5resgYTl9Mh3D43BkzQg0tF5R75fUkAMx7M1P6ZB6KEL1IKcGZCMt9deZAUTdtckkRUm6GEefzOF2ZCMnzaK88goQCZBZB1mQZDZD')
+app.config['FACEBOOK_AUTH'] = os.getenv('FACEBOOK_AUTH')
 
 app.config['SECURITY_PASSWORD_HASH'] = 'bcrypt'
 app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
 app.config['SECURITY_CHANGEABLE'] = True
 app.config['SECURITY_TRACKABLE'] = True
 
-app.secret_key = 'KU\x05x\x81v\x99\xff\x9a\xfd\xea^\xab\x99\x9e\t\x87\xc5\xf8\x93\x8d\x98\x84\x95'
+app.secret_key = os.getenv('SECRET_KEY')
 
 app.jinja_env.globals['momentjs'] = momentjs
 app.jinja_env.trim_blocks = True
