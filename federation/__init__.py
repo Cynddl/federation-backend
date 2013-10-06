@@ -19,7 +19,7 @@ app.config['MONGODB_SETTINGS'] = {'db': 'federation', 'host': app.config['MONGO_
 app.config['FACEBOOK_AUTH'] = os.getenv('FACEBOOK_AUTH', 'CAACEdEose0cBAOBDTWXIkShrnPuMBi1DaR0rTCZBYUPDrfv7ApZBYThapTlWWbrYkhtui9gzqZB3ZBD5resgYTl9Mh3D43BkzQg0tF5R75fUkAMx7M1P6ZB6KEL1IKcGZCMt9deZAUTdtckkRUm6GEefzOF2ZCMnzaK88goQCZBZB1mQZDZD')
 
 app.config['SECURITY_PASSWORD_HASH'] = 'bcrypt'
-app.config['SECURITY_PASSWORD_SALT'] = 'secret_code'
+app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
 app.config['SECURITY_CHANGEABLE'] = True
 app.config['SECURITY_TRACKABLE'] = True
 
