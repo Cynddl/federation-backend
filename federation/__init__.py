@@ -19,11 +19,11 @@ app.config['MONGODB_SETTINGS'] = {'db': 'federation', 'host': app.config['MONGO_
 app.config['FACEBOOK_AUTH'] = os.getenv('FACEBOOK_AUTH')
 
 app.config['SECURITY_PASSWORD_HASH'] = 'bcrypt'
-app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
+app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT', '')
 app.config['SECURITY_CHANGEABLE'] = True
 app.config['SECURITY_TRACKABLE'] = True
 
-app.secret_key = os.getenv('SECRET_KEY')
+app.secret_key = os.getenv('SECRET_KEY', '')
 
 app.jinja_env.globals['momentjs'] = momentjs
 app.jinja_env.trim_blocks = True
