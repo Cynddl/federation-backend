@@ -439,6 +439,55 @@ body {
   border-bottom: 0;
   border-top: 2px solid #e7e7e7;
 }
+.minimal {
+  background-color: #e31a33;
+}
+.minimal .content {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  max-width: 940px;
+  height: 500px;
+}
+.minimal .content h2 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  color: #ffffff;
+}
+.minimal .content form {
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  margin-top: 20px;
+}
+.minimal .content form input {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  height: 50px;
+}
+.minimal .content form input[type="email"].invalid, .minimal .content
+form input[type="password"].invalid, .minimal .content form
+input[type="text"].invalid {
+  border: 2px solid #ffffff;
+}
+.minimal .content form input[type="email"], .minimal .content form
+input[type="password"], .minimal .content form input[type="text"] {
+  background-color: #9d2428;
+  color: #ffffff;
+  border: none;
+}
+.minimal .content form .button, .minimal .content form
+input[type="submit"] {
+  boder: 1px solid #9d2428;
+  color: #ffffff;
+  background-color: none;
+}
 body, html {
   margin: auto;
   height: 100%;

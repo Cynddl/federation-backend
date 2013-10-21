@@ -1,0 +1,63 @@
+// Minimal layout (ex: login)
+// --------------------------------------------------
+
+
+@mixin align-left-right() {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.minimal {
+	background-color: $regular-red;
+
+	.content {
+		position: absolute;
+		margin: auto;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+
+		max-width: 940px;
+		height: 500px;
+
+		h2 {
+			display: block;
+			@include align-left-right;
+			width: 300px;
+			color: white;
+		}
+
+		form {
+			@include align-left-right;
+			width: 300px;
+			margin-top: 20px;
+
+			input {
+				display: block;
+				width: 100%;
+				padding: 8px 12px;
+				height: 50px;
+				@include border-radius-left( 4px );
+				@include border-radius-right( 4px );
+			}
+
+			input[type="text"].invalid, input[type="email"].invalid, input[type="password"].invalid {
+				border: 2px solid white;
+			}
+
+			input[type="text"], input[type="email"], input[type="password"]  {				
+				background-color: $dark-red;
+				color: white;
+				border: none;
+			}
+
+			input[type="submit"], .button {
+				boder: 1px solid $dark-red;
+				color: white;
+				background-color: none;
+			}
+		}
+
+	}
+}
