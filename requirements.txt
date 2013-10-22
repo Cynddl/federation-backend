@@ -12,3 +12,4 @@ passlib==1.6.1
 pyScss==1.1.5
 simplejson==3.3.0
 py-bcrypt==0.4
+newrelic
