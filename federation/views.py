@@ -166,6 +166,21 @@ def admin(id=None):
     return render_template('admin.html', users=users, arrow=arrow, user_form=user_form, title_aside=title_aside, pretty_dict=pretty_dict)
 
 
+@app.route('/admin/delete/<string:id>')
+@roles_required('Administrateur')
+@login_required
+def delete_user(id):
+    """ Delete a single user. """
+    try:
+        user = User.objects.get(id=id)
+        user.delete()
+        flash(u'L\'utilisateur %s a bien été supprimé.' % id.encode('utf-8'))
+        return redirect('/admin')
+    except (DoesNotExist, ValidationError):
+        flash(u'L\'utilisateur %s est inconnu.' % id.encode('utf-8'))
+        return redirect('/admin')
+
+
 @app.route('/public/cse', methods=['GET', 'POST'])
 def public_cse():
     if 'email' in request.form and 'id' in request.form:
