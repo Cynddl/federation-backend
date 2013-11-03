@@ -7,6 +7,7 @@ from functools import wraps, update_wrapper
 from models import Event, DossierCSE
 
 from datetime import datetime, date, timedelta
+from dateutil.relativedelta import relativedelta
 import facebook
 
 try:
@@ -136,7 +137,7 @@ def get_month_bounds(year=None, month=None):
     if year is None:
         year = today.year
     day_first = datetime(year, month, 1)
-    day_last = datetime(year, month + 1, 1)
+    day_last = datetime(year, month, 1) + relativedelta(months=1)
     return day_first, day_last
 
 
