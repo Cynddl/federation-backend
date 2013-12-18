@@ -41,7 +41,8 @@
 				<td>{{ pretty_dict(user.roles, 'name') }}</td>
 				<td>{{ user.associations | join(', ') }}</td>
 				{% if user.login_count %}
-				<td>{{ arrow.get(user.last_login_at).to('Europe/Paris').format('DD MMMM à HH:mm', 'fr') }}</td>
+				{#<td>{{ arrow.get(user.last_login_at).to('Europe/Paris').format(u'DD MMMM à HH:mm', 'fr') }}</td>#}
+				<td>{{ user.last_login_at }}</td>
 				<td>{{ user.login_count }}</td>
 				{% else %}
 				<td>Jamais</td>
